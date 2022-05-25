@@ -1,0 +1,9 @@
+pandas
+altair
+numpy
+matplotlib
+seaborn
+pyLDAvis == 3.2.2
+gensim
+nltk
+spacy
