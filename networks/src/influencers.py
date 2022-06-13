@@ -16,3 +16,5 @@ d_merged = d.merge(d_influencers, on = "mentioner", how = "inner")
 len(d_merged)
 len(list(d_merged["mentioner"].unique()))
 len(d_influencers)
+
+# make a basic plot 
