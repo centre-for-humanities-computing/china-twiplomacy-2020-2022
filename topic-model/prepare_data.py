@@ -146,11 +146,11 @@ if __name__ == "__main__":
     df_eng["text_clean"] = [" ".join(text) for text in texts]
 
     # save the data for the three periods
-    subset1 = subset_dates(df_eng, lower_day=11, lower_month=1, lower_year=2019, upper_day=28, upper_month=2, upper_year=2021)
+    subset1 = subset_dates(df_eng, lower_day=1, lower_month=11, lower_year=2019, upper_day=28, upper_month=2, upper_year=2021)
     subset1.to_csv('data/early_data.csv')
 
     subset2 = subset_dates(df_eng, lower_day=1, lower_month=3, lower_year=2021, upper_day=30, upper_month=4, upper_year=2022)
     subset2.to_csv('data/late_data.csv')
 
-    subset3 = subset_dates(df_eng, lower_day=11, lower_month=1, lower_year=2019, upper_day=30, upper_month=4, upper_year=2022)
+    subset3 = subset_dates(df_eng, lower_day=1, lower_month=11, lower_year=2019, upper_day=30, upper_month=4, upper_year=2022)
     subset3.to_csv('data/all_data.csv')
