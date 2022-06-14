@@ -47,8 +47,8 @@ plot_overall(d_merged, outpath, "cumulative_mentions.png")
 def plot_top_n(d, n, outpath, outname): 
     d_sorted = d.groupby('mentionee').size().reset_index(name = 'count').sort_values('count', ascending=False).head(n)
     d_filtered = d.merge(d_sorted, on = "mentionee", how = "inner")
-    print(f"total mentions: {d}")
-    print(f"mentions to top-10: {d_filtered}")
+    print(f"total mentions: {len(d)}")
+    print(f"mentions to top-{n}: {len(d_filtered)}")
     d_filtered = d_filtered.sort_values('created_at', ascending=True)
     d_filtered['cumsum'] = d_filtered.groupby('mentionee').cumcount()+1
     d_filtered = d_filtered.rename(columns = {'mentionee': 'handle'})
@@ -64,4 +64,4 @@ def plot_top_n(d, n, outpath, outname):
     plt.ylabel('Mentions (cumulative)')
     plt.savefig(f"{outpath}/{outname}", bbox_inches="tight")
 
-plot_top_n(d, 5, outpath, "cumulative_top5.png")
+plot_top_n(d_merged, 5, outpath, "cumulative_top5.png")
