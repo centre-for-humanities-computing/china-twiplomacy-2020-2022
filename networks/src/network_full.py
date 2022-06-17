@@ -170,9 +170,14 @@ def plot_network(G, nodelst, edgelst, color_dct, node_color, nodeedge_color, edg
     if nudge_triple: 
         pos = nudge_position(pos, nudge_triple)
 
+
+    ### new thing to clear it up ###
+    #cutoff = np.quantile(edge_width_lst, 0.95) # only 20% of edges shown
+
     # set up 
     node_size = [x/node_divisor for x in node_size_lst]
-    edge_width =  [x/edge_divisor for x in edge_width_lst]
+    edge_width = [x/edge_divisor for x in edge_width_lst]
+    #edge_width =  [x/edge_divisor if x > cutoff else 0 for x in edge_width_lst]
 
     # draw it 
     nx.draw_networkx_nodes(G, pos, nodelist = nodelst, node_size=node_size, node_color=node_color, edgecolors = nodeedge_color, linewidths=0.3) #, node_size = node_size, node_color = node_color)
@@ -251,7 +256,7 @@ def main(n_labels, infile, outfolder):
     nx.set_node_attributes(G, mentionee_size_dct, "mentions")
 
     # size based on various kinds of degree 
-    degree_information(G, G.degree(weight=None), "unweighted_degree")
+    #degree_information(G, G.degree(weight=None), "unweighted_degree")
     print(G.nodes(data=True))
     degree_information(G, G.degree(weight='weight'), "weighted_degree")
     degree_information(G, G.in_degree(weight='weight'), "in_degree")
@@ -278,7 +283,7 @@ def main(n_labels, infile, outfolder):
     # different sorts 
     dct_node = dict(G.nodes(data=True))
     dct_mention = sort_dictionary(dct_node, 'mentions')
-    dct_unweighted = sort_dictionary(dct_node, 'unweighted_degree')
+    #dct_unweighted = sort_dictionary(dct_node, 'unweighted_degree')
     dct_weighted = sort_dictionary(dct_node, "weighted_degree")
     dct_indegree = sort_dictionary(dct_node, "in_degree")
     dct_outdegree = sort_dictionary(dct_node, "out_degree") 
@@ -286,14 +291,14 @@ def main(n_labels, infile, outfolder):
     ''' 6. extract values from node dictionaries '''
     # extract node values 
     nodelst_mentions, nodesize_mentions, nodecategory_mentions = extract_values(dct_mention, "category", "mentions")
-    nodelst_unweighted, nodesize_unweighted, nodecategory_unweighted = extract_values(dct_unweighted, "category", "unweighted_degree")
+    #nodelst_unweighted, nodesize_unweighted, nodecategory_unweighted = extract_values(dct_unweighted, "category", "unweighted_degree")
     nodelst_weighted, nodesize_weighted, nodecategory_weighted = extract_values(dct_weighted, "category", "weighted_degree")
     nodelst_indegree, nodesize_indegree, nodecategory_indegree = extract_values(dct_indegree, "category", "in_degree")
     nodelst_outdegree, nodesize_outdegree, nodecategory_outdegree = extract_values(dct_outdegree, "category", "out_degree")
 
     ''' 6.1. category --> color '''
     nodecolor_mentions, nodeedgecolor_mentions = add_color(c_node, c_nodeedge, nodecategory_mentions)
-    nodecolor_unweighted, nodeedgecolor_unweighted = add_color(c_node, c_nodeedge, nodecategory_unweighted)
+    #nodecolor_unweighted, nodeedgecolor_unweighted = add_color(c_node, c_nodeedge, nodecategory_unweighted)
     nodecolor_weighted, nodeedgecolor_weighted = add_color(c_node, c_nodeedge, nodecategory_weighted)
     nodecolor_indegree, nodeedgecolor_indegree = add_color(c_node, c_nodeedge, nodecategory_indegree)
     nodecolor_outdegree, nodeedgecolor_outdegree = add_color(c_node, c_nodeedge, nodecategory_outdegree)
@@ -312,42 +317,31 @@ def main(n_labels, infile, outfolder):
     ## labels ---> next step 
     n_labels = args['nlabels'] 
     labeldict_mentions = get_labels(G, 'mentions', nodesize_mentions, n_labels)
-    labeldict_unweighted = get_labels(G, 'unweighted_degree', nodesize_unweighted, n_labels)
+    #labeldict_unweighted = get_labels(G, 'unweighted_degree', nodesize_unweighted, n_labels)
     labeldict_weighted = get_labels(G, 'weighted_degree', nodesize_weighted, n_labels)
     labeldict_indegree = get_labels(G, 'in_degree', nodesize_indegree, n_labels)
     labeldict_outdegree = get_labels(G, 'out_degree', nodesize_outdegree, n_labels - 4) # special treatment
 
     ''' mentions '''
     print('--> generating mentions plot')
-    node_divisor = 600*17
+    node_divisor = 40000*1
     edge_divisor = 100*edge_mult
     title = 'Diplomats and Media sub-network (nodesize: total number of mentions)'
     filename = 'network_focus_mentions'
-    nudge_triple = []
-
-
-    ## fix the fact that we now have two files 
-    #if infile == "/work/cn-some/china-twitter/networks/data/clean/df_full.csv":
-    #    nudge_triple = [ # nudge triple specifically for this data & seed
-    #        ('MFA_China', 0, 0.1),
-    #        ('AmbassadeChine', 0, 0.05),
-    #        ('PDChina', 0, 0.05),
-    #        ('ChnMission', -0.05, 0.1),
-    #        ('consulat_de', -0.05, 0),
-    #        ('chenweihua', -0.05, 0)
-    #        ] 
-    
-    #if infile == "/work/cn-some/china-twitter/networks/data/clean/rt_df_full.csv":
-    #    nudge_triple = [ # nudge triple specifically for this data and seed
-    #        ('consulat_de', -0.05, 0),
-    #        ('Chinamission2un', 0.05, 0),
-    #        ('zlj517', -0.1, -0.05),
-    #        ('chenweihua', 0.05, 0.1),
-    #        ('SpokespersonCHN', 0.05, 0.05),
-    #        ('AmbassadeChine', -0.05, 0.05),
-    #        ('CHN_UN_NY', 0.05, -0.05),
-    #        ('PDChina', 0.05, 0.05)
-    #    ]
+    nudge_triple = [
+        ('zlj517', 0, -0.1),
+        ('ChinaMissionGva', 0, -0.05),
+        ('CGTNOfficial', -0.1, 0.1),
+        ('CGMeifangZhang', -0.05, 0.05),
+        ('CHN_UN_NY', 0, 0.05),
+        ('xuejianosaka', -0.05, -0.05),
+        ('ConsulateSan', 0.05, -0.05),
+        ('ChinaCGCalgary', 0, -0.08),
+        ('ChinaMissionGva', 0, -0.1),
+        ('shen_shiwei', 0, -0.05),
+        ('AmbassadeChine', 0, -0.01),
+        ('chenweihua', 0, 0.01)
+    ]
 
     plot_network(
         G = G, 
@@ -369,36 +363,9 @@ def main(n_labels, infile, outfolder):
         seed = seed,
         nudge_triple = nudge_triple)
 
-    ## unweighted degree
-    print('--> generating unweighted degree plot')
-    node_divisor = 0.05*10
-    edge_divisor = 100*edge_mult
-    title = 'Diplomats and Media sub-network (nodesize: number of neighbors)'
-    filename = 'network_focus_unweighted_degree'
-
-    plot_network(
-        G = G, 
-        nodelst = nodelst_unweighted,
-        edgelst = edgelst,
-        color_dct = c_node,
-        node_color = nodecolor_unweighted,
-        nodeedge_color = nodeedgecolor_unweighted,
-        edge_color = edgecolor,
-        labeldict = labeldict_unweighted,
-        node_size_lst = nodesize_unweighted, 
-        edge_width_lst = edgesize,
-        node_divisor = node_divisor,
-        edge_divisor = edge_divisor,
-        title = title,
-        filename = filename,
-        outfolder = outfolder,
-        k = k,
-        seed = seed,
-        nudge_triple = nudge_triple)
-
     ## weighted degree 
     print('--> generating weighted degree plot')
-    node_divisor = 2.5*10.5
+    node_divisor = 10*10
     edge_divisor = 100*edge_mult
     title = 'Diplomats and Media sub-network (nodesize: number of neighbors weighted)'
     filename = 'network_focus_weighted_degree'
@@ -425,7 +392,7 @@ def main(n_labels, infile, outfolder):
 
     ''' in-degree '''
     print('--> generating in-degree plot')
-    node_divisor = 1.5*10
+    node_divisor = 5*10
     edge_divisor = 100*edge_mult
     title = 'Diplomats and Media sub-network (nodesize: in-degree -- inwards)'
     filename = 'network_focus_in_degree'
@@ -452,7 +419,7 @@ def main(n_labels, infile, outfolder):
 
     ## out-degree
     print('--> generating out-degree plot')
-    node_divisor = 1.5*10
+    node_divisor = 5*10
     edge_divisor = 100*edge_mult
     title = 'Diplomats and Media sub-network (nodesize: out-degree -- outwards)'
     filename = 'network_focus_out_degree'

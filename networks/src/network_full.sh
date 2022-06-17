@@ -7,7 +7,7 @@ python -m ipykernel install --user --name $VENVNAME --display-name "$VENVNAME"
 
 # what to run
 NET=true
-SUM=true
+SUM=false
 
 # plot networks
 if [ $NET = true ]

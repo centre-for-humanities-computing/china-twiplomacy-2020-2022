@@ -6,8 +6,8 @@ source /work/cn-some/china-twiplomacy-2020-2022/$VENVNAME/bin/activate
 python -m ipykernel install --user --name $VENVNAME --display-name "$VENVNAME"
 
 # what to run
-NET=false
-SUM=true
+NET=true
+SUM=false
 
 # plot networks
 if [ $NET = true ]
