@@ -83,7 +83,7 @@ def grid_search(df, filename):
     # Can take a long time to run
 
     # Categories
-    categories = ["Media", "Diplomat"]
+    categories = ['Media']#["Media", "Diplomat"]
     total_categories = len(categories)
     
     pbar = tqdm.tqdm(total=total_topics * total_alphas * total_beta * total_categories)

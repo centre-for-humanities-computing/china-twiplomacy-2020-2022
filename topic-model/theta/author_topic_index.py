@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 
 def main():
-    fname = os.path.join('..','data','diplomats_noretweet_theta_df.csv')
+    fname = os.path.join('..','data','theta','diplomats_noretweet_theta_df.csv')
     df = pd.read_csv(fname)
     ii = 20
     colnames = df.columns.values[ii:]
@@ -27,7 +27,7 @@ def main():
         theta_dict[usr] = sub_theta_avg
         # index 1: max, 30: min
         index = np.zeros(sub_theta_avg.shape, dtype=int)
-        index[np.argsort(sub_theta_avg)] = range(30,0,-1)
+        index[np.argsort(sub_theta_avg)] = range(20,0,-1)
         index_dict[usr] = index
 
     # write to tabular

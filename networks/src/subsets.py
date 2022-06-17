@@ -39,7 +39,8 @@ select_cols = [
     'mentioner',
     'retweet',
     'category',
-    'category_mentionee']
+    'category_mentionee',
+    'text']
 
 df_total = df_total[select_cols]
 df_early = df_early[select_cols]

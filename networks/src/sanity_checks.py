@@ -105,8 +105,3 @@ outpath = "/work/cn-some/china-twiplomacy-2020-2022/networks/data/clean/"
 d_full_hzm.to_csv(f"{outpath}full_clean.csv", index=False)
 d_early_hzm.to_csv(f"{outpath}early_clean.csv", index=False)
 d_late_hzm.to_csv(f"{outpath}late_clean.csv", index=False)
-
-
-d_full_relabel.groupby('category_mentionee').size()
-tst = d_full_relabel[d_full_relabel["category_mentionee"] == "Neither"]
-tst["mentionee"].unique()

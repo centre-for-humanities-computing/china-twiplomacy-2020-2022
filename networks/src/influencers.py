@@ -2,12 +2,14 @@ import pandas as pd
 import re
 import seaborn as sns 
 import matplotlib.pyplot as plt
+import openpyxl
 
 # set vars
 outpath = "/work/cn-some/china-twiplomacy-2020-2022/networks/fig/influencers"
 
 # main data
 d = pd.read_csv("/work/cn-some/china-twiplomacy-2020-2022/networks/data/clean/full_clean.csv")
+d.head(5)
 
 # influencers
 with open('/work/cn-some/china-twiplomacy-2020-2022/networks/data/reference/influencers.txt') as f:
@@ -18,10 +20,13 @@ d_influencers = pd.DataFrame({'mentioner': lines})
 
 # join 
 d_merged = d.merge(d_influencers, on = "mentioner", how = "inner")
+d_merged.to_csv(f"{outpath}/influencer_overview.csv", index=False)
+d_xlsx = d_merged[["created_at", "mentionee", "mentioner", "retweet", "category_mentionee", "text"]]
+d_xlsx.to_excel(f'{outpath}/influencer_overview.xlsx', sheet_name = "influencers", index=False)
 
 # generate csv file & write
 d_overview = d_merged.groupby('mentionee').size().reset_index(name = 'number_influencer_mentions').sort_values('number_influencer_mentions', ascending=False)
-d_overview.to_csv(f"{outpath}/overview.csv", index=False)
+d_overview.to_csv(f"{outpath}/influencer_grouped.csv", index=False)
 
 ## plot over time ## 
 d_merged["created_at"] = pd.to_datetime(d_merged["created_at"]).dt.date

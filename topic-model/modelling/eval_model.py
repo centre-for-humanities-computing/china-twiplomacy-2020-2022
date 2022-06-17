@@ -40,8 +40,8 @@ if __name__ == "__main__":
     ## Find best hyperparameters
     # media
 
-    media = data[(data["Category"] == "Media")]
-    best_media = media[media["Coherence"] == max(media["Coherence"])]
+    #media = data[(data["Category"] == "Media")]
+    #best_media = media[media["Coherence"] == max(media["Coherence"])]
 
     # diplo
 
@@ -53,5 +53,5 @@ if __name__ == "__main__":
     df = df[df["retweet"] != "retweeted"]
     df['text_clean'] = df['text_clean'].astype(str)
 
-    gen_best_LDA(best_media, df)
+    #gen_best_LDA(best_media, df)
     gen_best_LDA(best_diplo, df)
