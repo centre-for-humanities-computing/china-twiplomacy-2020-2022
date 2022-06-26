@@ -24,46 +24,46 @@ Influencers identified by ASPI: https://www.aspi.org.au/report/borrowing-mouths-
 ![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/stats_full/summary_focus_degree.png)
 
 #### Figure 1b: Top mentionees (in-degree) and mentioners (out-degree) - early period
-![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/tree/main/networks/fig/stats_early/summary_focus_degree.png)
+![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/stats_early/summary_focus_degree.png)
 
 #### Figure 1c: Top mentionees (in-degree) and mentioners (out-degree) - late period
-![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/tree/main/networks/fig/stats_late/summary_focus_degree.png)
+![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/stats_late/summary_focus_degree.png)
 
 #### Figure 2a: Total mentions to handles in network from all Twitter users - full period
-![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/tree/main/networks/fig/network_full/network_focus_mentions_seed11_k1.8.png)
+![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/network_full/network_focus_mentions_seed11_k1.8.png)
 
 #### Figure 2b: Total mentions to handles in network from all Twitter users - early period
-![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/tree/main/networks/fig/network_early/network_focus_mentions_seed11_k1.8.png)
+![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/network_early/network_focus_mentions_seed11_k1.8.png)
 
 #### Figure 2c: Total mentions to handles in network from all Twitter users - late period
-![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/tree/main/networks/fig/network_late/network_focus_mentions_seed11_k1.8.png)
+![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/network_late/network_focus_mentions_seed11_k1.8.png)
 
 #### Figure 3a: Total mentions between handles in network - full period
-![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/tree/main/networks/fig/network_full/network_focus_weighted_degree_seed11_k1.8.png)
+![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/network_full/network_focus_weighted_degree_seed11_k1.8.png)
 
 #### Figure 3b: Total mentions between handles in network - early period
-![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/tree/main/networks/fig/network_early/network_focus_weighted_degree_seed11_k1.8.png)
+![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/network_early/network_focus_weighted_degree_seed11_k1.8.png)
 
 #### Figure 3c: Total mentions between handles in network - late period
-![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/tree/main/networks/fig/network_late/network_focus_weighted_degree_seed11_k1.8.png)
+![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/network_late/network_focus_weighted_degree_seed11_k1.8.png)
 
 #### Figure 4a: Mentionees in network (in-degree) - full period
-![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/tree/main/networks/fig/network_full/network_focus_in_degree_seed11_k1.8.png)
+![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/network_full/network_focus_in_degree_seed11_k1.8.png)
 
 #### Figure 4b: Mentionees in network (in-degree) - early period
-![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/tree/main/networks/fig/network_early/network_focus_in_degree_seed11_k1.8.png)
+![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/network_early/network_focus_in_degree_seed11_k1.8.png)
 
 #### Figure 4c: Mentionees in network (in-degree) - late period
-![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/tree/main/networks/fig/network_late/network_focus_in_degree_seed11_k1.8.png)
+![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/network_late/network_focus_in_degree_seed11_k1.8.png)
 
 #### Figure 5a: Mentioners in network (out-degree) - full period
-![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/tree/main/networks/fig/network_full/network_focus_out_degree_seed11_k1.8.png)
+![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/network_full/network_focus_out_degree_seed11_k1.8.png)
 
 #### Figure 5b: Mentioners in network (out-degree) - early period
-![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/tree/main/networks/fig/network_early/network_focus_out_degree_seed11_k1.8.png)
+![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/network_early/network_focus_out_degree_seed11_k1.8.png)
 
 #### Figure 5c: Mentioners in network (out-degree) - late period
-![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/tree/main/networks/fig/network_late/network_focus_out_degree_seed11_k1.8.png)
+![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/network_late/network_focus_out_degree_seed11_k1.8.png)
 
 ## Network Analysis (NB: needs modification)
 Network analysis performed using the networkx package in python (https://networkx.org/) and the network visualizations are generated from the file ```network_main.py``` (see usage below). 
