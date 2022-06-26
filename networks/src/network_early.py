@@ -209,8 +209,7 @@ def main(n_labels, infile, outfolder, df_threshold):
     weighted_mention = concat_sub.groupby(['mentionee', 'mentioner', 'category', 'category_mentionee']).size().to_frame('weight').reset_index() # weighted
     
     #### naive backboning after results ####
-    if df_threshold: 
-        weighted_copy = weighted_mention[weighted_mention["weight"] > df_threshold]
+    weighted_copy = weighted_mention[weighted_mention["weight"] > df_threshold]
     def edgelist_to_authors(d, from_col, to_col):
         df_src_authors = d[[from_col]]
         df_trg_authors = d[[to_col]].rename(columns = {to_col: from_col})
@@ -221,49 +220,6 @@ def main(n_labels, infile, outfolder, df_threshold):
     authorlst = edgelist_to_authors(weighted_copy, "mentionee", "mentioner")
     #### naive backboning after results ####    
 
-
-    ###### testing naive backboning ######
-    #if df_threshold: 
-    #    print(df_threshold)
-    #    lesser = weighted_mention[weighted_mention['mentionee'] > weighted_mention['mentioner']]
-    #    greater = weighted_mention[weighted_mention['mentionee'] < weighted_mention['mentioner']]
-    #    greater = greater.rename(columns = {
-    #        'mentionee': 'mentioner',
-    #        'mentioner': 'mentionee',
-    #        'category': 'category_mentionee',
-    #        'category_mentionee': 'category'})
-    #    total = pd.concat([lesser, greater])
-    #    weighted_mention = total.groupby(['mentionee', 'mentioner', 'category', 'category_mentionee'])['weight'].sum().to_frame('weight').reset_index()
-    #    weighted_mention = weighted_mention[weighted_mention["weight"] > df_threshold]
-    ###### end testing naive backboning #######
-
-    ####### testing backboning #######
-    #if df_threshold: 
-    #    df_renamed = weighted_mention.rename(columns = {
-    #        'mentionee': 'src',
-    #        'mentioner': 'trg',
-    #        'weight': 'nij'
-    #    })
-
-        ## backboning disparity filter (DF)
-    #    table_df = backboning.disparity_filter(df_renamed, undirected = False)
-    #    bb_df = backboning.thresholding(table_df, df_threshold) 
-
-        ## log information 
-    #    print(f"number of edges: {len(bb_df)}")
-    #    print(f"number of in-degree: {len(bb_df['trg'].unique())}")
-
-        ## convert back 
-    #    bb_df_renamed = bb_df.rename(columns = {
-    #        'src': 'mentionee',
-    #        'trg': 'mentioner',
-    #        'nij': 'weight'
-    #    })
-
-
-    #    weighted_mention = bb_df_renamed.merge(weighted_mention, on = ['mentionee', 'mentioner', 'weight'], how = 'inner')
-    ###### stop testing backboning ######
-    
     G = nx.from_pandas_edgelist(weighted_mention,source='mentioner',target='mentionee', edge_attr='weight', create_using=nx.DiGraph()) # create network
 
     ## new checking ##
