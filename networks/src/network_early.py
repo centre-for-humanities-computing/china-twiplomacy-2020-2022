@@ -3,6 +3,7 @@ main document for plot (updated 2022-02-01 VMP).
 '''
 
 # imports 
+import backboning
 import pandas as pd 
 import numpy as np
 import networkx as nx 
@@ -149,7 +150,7 @@ def extract_edgedict(dict_lst, var_lst, sort_var):
     return edge_dict_sorted 
 
 #### plot 1 ####
-def plot_network(G, nodelst, edgelst, color_dct, node_color, nodeedge_color, edge_color, labeldict, node_size_lst, edge_width_lst, node_divisor, edge_divisor, title, filename, outfolder, seed = 8, k = 2, nudge_triple = False): 
+def plot_network(df_threshold, G, nodelst, edgelst, color_dct, node_color, nodeedge_color, edge_color, labeldict, node_size_lst, edge_width_lst, node_divisor, edge_divisor, title, filename, outfolder, seed = 8, k = 2, nudge_triple = False): 
 
     '''
     G: <networkx.classes.digraph.DiGraph> the graph
@@ -160,6 +161,8 @@ def plot_network(G, nodelst, edgelst, color_dct, node_color, nodeedge_color, edg
     title: <str> plot title 
     filename: <str> filename 
     '''
+
+
 
     # setup 
     fig, ax = plt.subplots(figsize=(2.5, 2.5), dpi=300, facecolor='w', edgecolor='k')
@@ -172,7 +175,7 @@ def plot_network(G, nodelst, edgelst, color_dct, node_color, nodeedge_color, edg
 
     # set up 
     node_size = [x/node_divisor for x in node_size_lst]
-    edge_width =  [x/edge_divisor for x in edge_width_lst]
+    edge_width =  [x/edge_divisor if x > df_threshold else 0 for x in edge_width_lst]
 
     # draw it 
     nx.draw_networkx_nodes(G, pos, nodelist = nodelst, node_size=node_size, node_color=node_color, edgecolors = nodeedge_color, linewidths=0.3) #, node_size = node_size, node_color = node_color)
@@ -188,7 +191,7 @@ def plot_network(G, nodelst, edgelst, color_dct, node_color, nodeedge_color, edg
     plt.tight_layout()
     plt.savefig(f"{outfolder}/{filename}_seed{seed}_k{k}.png", bbox_inches='tight')
 
-def main(n_labels, infile, outfolder): 
+def main(n_labels, infile, outfolder, df_threshold): 
     print(infile)
     ''' 1. vars '''
     seed = 11
@@ -204,6 +207,63 @@ def main(n_labels, infile, outfolder):
     concat = concat[concat["mentionee"] != concat['mentioner']] # remove self-mentions
     concat_sub = concat[(concat["category"] == "Media") | (concat['category'] == 'Diplomat')] # only cited by media or diplomat
     weighted_mention = concat_sub.groupby(['mentionee', 'mentioner', 'category', 'category_mentionee']).size().to_frame('weight').reset_index() # weighted
+    
+    #### naive backboning after results ####
+    if df_threshold: 
+        weighted_copy = weighted_mention[weighted_mention["weight"] > df_threshold]
+    def edgelist_to_authors(d, from_col, to_col):
+        df_src_authors = d[[from_col]]
+        df_trg_authors = d[[to_col]].rename(columns = {to_col: from_col})
+        df_concat_authors = pd.concat([df_src_authors, df_trg_authors])
+        df_authors_edgelist = df_concat_authors.drop_duplicates()
+        authorlst = list(df_authors_edgelist["mentionee"])
+        return authorlst
+    authorlst = edgelist_to_authors(weighted_copy, "mentionee", "mentioner")
+    #### naive backboning after results ####    
+
+
+    ###### testing naive backboning ######
+    #if df_threshold: 
+    #    print(df_threshold)
+    #    lesser = weighted_mention[weighted_mention['mentionee'] > weighted_mention['mentioner']]
+    #    greater = weighted_mention[weighted_mention['mentionee'] < weighted_mention['mentioner']]
+    #    greater = greater.rename(columns = {
+    #        'mentionee': 'mentioner',
+    #        'mentioner': 'mentionee',
+    #        'category': 'category_mentionee',
+    #        'category_mentionee': 'category'})
+    #    total = pd.concat([lesser, greater])
+    #    weighted_mention = total.groupby(['mentionee', 'mentioner', 'category', 'category_mentionee'])['weight'].sum().to_frame('weight').reset_index()
+    #    weighted_mention = weighted_mention[weighted_mention["weight"] > df_threshold]
+    ###### end testing naive backboning #######
+
+    ####### testing backboning #######
+    #if df_threshold: 
+    #    df_renamed = weighted_mention.rename(columns = {
+    #        'mentionee': 'src',
+    #        'mentioner': 'trg',
+    #        'weight': 'nij'
+    #    })
+
+        ## backboning disparity filter (DF)
+    #    table_df = backboning.disparity_filter(df_renamed, undirected = False)
+    #    bb_df = backboning.thresholding(table_df, df_threshold) 
+
+        ## log information 
+    #    print(f"number of edges: {len(bb_df)}")
+    #    print(f"number of in-degree: {len(bb_df['trg'].unique())}")
+
+        ## convert back 
+    #    bb_df_renamed = bb_df.rename(columns = {
+    #        'src': 'mentionee',
+    #        'trg': 'mentioner',
+    #        'nij': 'weight'
+    #    })
+
+
+    #    weighted_mention = bb_df_renamed.merge(weighted_mention, on = ['mentionee', 'mentioner', 'weight'], how = 'inner')
+    ###### stop testing backboning ######
+    
     G = nx.from_pandas_edgelist(weighted_mention,source='mentioner',target='mentionee', edge_attr='weight', create_using=nx.DiGraph()) # create network
 
     ## new checking ##
@@ -252,7 +312,7 @@ def main(n_labels, infile, outfolder):
 
     # size based on various kinds of degree 
     #degree_information(G, G.degree(weight=None), "unweighted_degree")
-    print(G.nodes(data=True))
+    #print(G.nodes(data=True))
     degree_information(G, G.degree(weight='weight'), "weighted_degree")
     degree_information(G, G.in_degree(weight='weight'), "in_degree")
     degree_information(G, G.out_degree(weight='weight'), "out_degree")
@@ -277,6 +337,10 @@ def main(n_labels, infile, outfolder):
     ''' 5. sort node dictionaries '''
     # different sorts 
     dct_node = dict(G.nodes(data=True))
+
+    ###### naive filtering after calculations #######
+    dct_node = {key: value for key, value in dct_node.items() if key in authorlst}
+
     dct_mention = sort_dictionary(dct_node, 'mentions')
     #dct_unweighted = sort_dictionary(dct_node, 'unweighted_degree')
     dct_weighted = sort_dictionary(dct_node, "weighted_degree")
@@ -322,7 +386,7 @@ def main(n_labels, infile, outfolder):
     node_divisor = 20000*1
     edge_divisor = 100*edge_mult
     title = 'Diplomats and Media sub-network (nodesize: total number of mentions)'
-    filename = 'network_focus_mentions'
+    filename = f'network_focus_mentions_{df_threshold}'
     nudge_triple = [
         ('HuXijin_GT', -0.1, 0),
         ('AmbassadeChine', 0.1, 0.02),
@@ -335,6 +399,7 @@ def main(n_labels, infile, outfolder):
     ]
 
     plot_network(
+        df_threshold = df_threshold,
         G = G, 
         nodelst = nodelst_mentions,
         edgelst = edgelst,
@@ -359,9 +424,10 @@ def main(n_labels, infile, outfolder):
     node_divisor = 6*10
     edge_divisor = 100*edge_mult
     title = 'Diplomats and Media sub-network (nodesize: number of neighbors weighted)'
-    filename = 'network_focus_weighted_degree'
+    filename = f'network_focus_weighted_degree_{df_threshold}'
 
     plot_network(
+        df_threshold = df_threshold,
         G = G, 
         nodelst = nodelst_weighted,
         edgelst = edgelst,
@@ -386,9 +452,10 @@ def main(n_labels, infile, outfolder):
     node_divisor = 3*10
     edge_divisor = 100*edge_mult
     title = 'Diplomats and Media sub-network (nodesize: in-degree -- inwards)'
-    filename = 'network_focus_in_degree'
+    filename = f'network_focus_in_degree_{df_threshold}'
 
     plot_network(
+        df_threshold = df_threshold,
         G = G, 
         nodelst = nodelst_indegree,
         edgelst = edgelst,
@@ -413,9 +480,10 @@ def main(n_labels, infile, outfolder):
     node_divisor = 3*10
     edge_divisor = 100*edge_mult
     title = 'Diplomats and Media sub-network (nodesize: out-degree -- outwards)'
-    filename = 'network_focus_out_degree'
+    filename = f'network_focus_out_degree_{df_threshold}'
 
     plot_network(
+        df_threshold = df_threshold,
         G = G, 
         nodelst = nodelst_outdegree,
         edgelst = edgelst,
@@ -440,5 +508,10 @@ if __name__ == "__main__":
     ap.add_argument("-in", "--infile", required=True, help="path to csv")
     ap.add_argument("-out", "--outfolder", required=True, help="path to fig folder")
     ap.add_argument("-n", "--nlabels", required=False, type=int, default=20, help="how many labels on plots")
+    ap.add_argument('-th', '--threshold', required=False, type=int, default=False, help = "backboning threshold")
     args = vars(ap.parse_args())
-    main(n_labels = args["nlabels"], infile = args["infile"], outfolder = args["outfolder"])
+    main(
+        n_labels = args["nlabels"], 
+        infile = args["infile"], 
+        outfolder = args["outfolder"],
+        df_threshold = args['threshold'])
