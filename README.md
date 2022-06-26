@@ -21,7 +21,7 @@ Influencers identified by ASPI: https://www.aspi.org.au/report/borrowing-mouths-
 ### Figures 
 
 #### Figure 1a: Top mentionees (in-degree) and mentioners (out-degree) - full period
-![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/tree/main/networks/fig/stats_full/summary_focus_degree.png)
+![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/stats_full/summary_focus_degree.png)
 
 #### Figure 1b: Top mentionees (in-degree) and mentioners (out-degree) - early period
 ![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/tree/main/networks/fig/stats_early/summary_focus_degree.png)
