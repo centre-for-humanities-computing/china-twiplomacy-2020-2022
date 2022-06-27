@@ -38,6 +38,9 @@ Influencers identified by ASPI: https://www.aspi.org.au/report/borrowing-mouths-
 #### Figure 2c: Total mentions to handles in network from all Twitter users - late period
 ![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/network_late/network_focus_mentions_seed11_k1.8.png)
 
+#### Figure 2d: EXAMPLE FOR RASMUS (TMP!)
+![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/network_late/network_focus_mentions_seed11_k1.8_test.png)
+
 #### Figure 3a: Total mentions between handles in network - full period
 ![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/network_full/network_focus_weighted_degree_seed11_k1.8.png)
 
