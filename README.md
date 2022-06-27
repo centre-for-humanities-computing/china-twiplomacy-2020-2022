@@ -65,6 +65,15 @@ Influencers identified by ASPI: https://www.aspi.org.au/report/borrowing-mouths-
 #### Figure 5c: Mentioners in network (out-degree) - late period
 ![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/network_late/network_focus_out_degree_seed11_k1.8.png)
 
+#### Figure 6: Topic model (diplomats) - full period
+open [here](https://htmlpreview.github.io/?https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/topic-model/plots/topic_model_diplomat_alldates.html)
+
+#### Figure 7: Topic model (diplomats) - early period
+open [here](https://htmlpreview.github.io/?https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/topic-model/plots/topic_model_diplomat_earlydates.html)
+
+#### Figure 8: Topic model (diplomats) - late period
+open [here](https://htmlpreview.github.io/?https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/topic-model/plots/topic_model_diplomat_latedates.html)
+
 ## Network Analysis (NB: needs modification)
 Network analysis performed using the networkx package in python (https://networkx.org/) and the network visualizations are generated from the file ```network_main.py``` (see usage below). 
 Nodes in the networks are Twitter handles, and edges (connections) are weighted by the number of mentions between the Twitter handles that are displayed. 
@@ -108,3 +117,20 @@ This ensures that the bash script calls (runs)
 
 ## Bot Detection
 We train a logistic classifier on the cresci-2017 (Cresci et al., 2017) data set (available: https://botometer.osome.iu.edu/bot-repository/datasets.html) to classify Twitter handles as genuine or spam/bot/fake. We use the widely used fofo metric (e.g. Yang et al., 2013; Tavazoee et al., 2020) which is (following/followers) of an account. We use (following+1/followers+1) to avoid division with zero, and when an account appears more than once in a data set we use only the last appearance (i.e. the number of following and followers for the handle at that time). The intuition behind the metric is that bot-accounts tend to follow many other accounts (following) but they tend to have few followers. This means that they will generally have a high fofo-ratio (i.e. high following, low followers). Using the trained model, we estimate the fraction of genuine accounts vs. spam/bot/fake accounts in our own data set, as well as in a baseline data set consisting of vaccine-related tweets from 2020-2021 (https://www.kaggle.com/datasets/gpreda/all-covid19-vaccines-tweets). We estimate 27.22% of the accounts in the baseline (vaccine) data set to be non-genuine accounts and 44.84% of accounts in our data set of Chinese state media and diplomats to be non-genuine accounts. There is considerable uncertainty around this estimate since (1) our data set might differ in other respects than the amount of bot-activity from the baseline data set and (2) while the fofo-metric is widely used (Yang et al., 2013) it is not universally found to be accurate in detecting bots. 
+
+## Topic model
+A topic model was created for each of the three time periods. Latent Dirichlet Allocation topic modelling using `gensim` package in Python (See documentation: https://radimrehurek.com/gensim_3.8.3/models/ldamodel.html). 
+LDA is a hierarchical Bayesian model with three levels, in which each item of a collection, in this case tweets, is modeled as a finite mixture over an underlying set of topics. In turn, each topic is modeled as an infinite mixture over an underlying set of topic probabilities. An explicit representation of each tweet is provided by the topic probabilities. 
+
+A total of 180 models were trained for both diplomat and media tweets in each time period with a variation of the following three hyperparameters:
+* Number of Topics (K)
+    * The topic model was trained requesting 10, 15, 20, 25, 30 and 35 latent topics
+* Dirichlet hyperparameter alpha: A-priori document-topic density
+    * The topic model was trained using 6 different a-priori beliefs about the document-topic density, including 0.01, 0.31, 0.61, 0.91, symmetric ![equation](https://latex.codecogs.com/svg.image?%5Cleft(%5Cfrac%7B1%7D%7Bn_%7Btopics%7D%7D%5Cright)) and asymmetric ![equation](https://latex.codecogs.com/svg.image?%5Cleft(%5Cfrac%7B1%7D%7Btopic_%7Bi%7D%20&plus;%20%5Csqrt%7Bn_%7Btopics%7D%7D%7D%5Cright))
+* Dirichlet hyperparameter beta: A-priori word-topic density
+    * The topic model was trained using 5 different a-priori beliefs about the word-topic density, including 0.01, 0.31, 0.61, 0.91 and symmetric ![equation](https://latex.codecogs.com/svg.image?%5Cleft(%5Cfrac%7B1%7D%7Bn_%7Btopics%7D%7D%5Cright))
+
+The model with the best ![equation](https://latex.codecogs.com/svg.image?c_v) coherence score is chosen for analysis. 
+
+
+When the models have been generated, run the code in the topic_model.ipynb to visualize the results. Furthermore, visualisations of how prevalent each topic was over time (averaged topic weight) can be found in the `topics_over_time.ipynb`. 
