@@ -1,5 +1,5 @@
 '''
-VMP 2022-06-13: meta-data for bot-detection in the other project
+VMP 2022-06-13: meta-data for bot-detection in the other project (china-twitter)
 '''
 
 import pandas as pd 
