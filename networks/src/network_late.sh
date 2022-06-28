@@ -15,7 +15,7 @@ then
 	python /work/cn-some/china-twiplomacy-2020-2022/networks/src/network_late.py \
 		-in  /work/cn-some/china-twiplomacy-2020-2022/networks/data/clean/late_clean.csv \
 		-out /work/cn-some/china-twiplomacy-2020-2022/networks/fig/network_late \
-		-n 15
+		-n 13
 fi 
 
 # summary stats

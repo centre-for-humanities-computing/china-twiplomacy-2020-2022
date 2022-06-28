@@ -38,19 +38,14 @@ def get_labels(G, type_str, type_lst, n_labels):
     '''
     # sort list and take top 
     focus_handles = [
-        #'XHNews', 
-        #'CGTNOfficial', 
-        #'ChinaDaily', 
-        #'globaltimesnews',  
-        #'SpokespersonCHN', 
-        #'MFA_China',
-        #'zlj517',
-        #'PDChina', 
-        #'AmbLiuXiaoMing', 
-        #'AmbCuiTianKai',
-        #'HuXijin_GT',
-        #'CNS51952',
-        #'ChnEmbassy_jp'
+        "zlj517", 
+        "MFA_China",
+        "SpokespersonCHN", 
+        "XHNews",
+        "CGTNOfficial",
+        "ChinaDaily", 
+        "xuejianosaka",
+        "CGMeifangZhang" 
     ]
     
     lst_sorted = sorted(type_lst, reverse=True)
@@ -192,7 +187,7 @@ def plot_network(G, nodelst, edgelst, color_dct, node_color, nodeedge_color, edg
     lines, labels = get_legend(node_size, color_dct)
     fig.legend(lines, labels, bbox_to_anchor=[0.53, 0.14], labelspacing = 1, columnspacing = 1, fontsize = 6, frameon = False, ncol=2, handletextpad=0.01)
     plt.tight_layout()
-    plt.savefig(f"{outfolder}/{filename}_seed{seed}_k{k}_test.png", bbox_inches='tight')
+    plt.savefig(f"{outfolder}/{filename}_seed{seed}_k{k}.png", bbox_inches='tight')
 
 def main(n_labels, infile, outfolder): 
     print(infile)
@@ -337,7 +332,9 @@ def main(n_labels, infile, outfolder):
         ('CGMeifangZhang', 0, -0.04),
         ('ConsulateSan', 0, -0.045),
         ('CHN_UN_NY', -0.03, 0.03),
-        ('chenweihua', -0.02, 0.02)
+        ('chenweihua', -0.02, 0.02),
+        ('ChnConsul_osaka', 0, -0.04),
+        ('CGTNOfficial', 0, 0.03)
     ]
 
     plot_network(

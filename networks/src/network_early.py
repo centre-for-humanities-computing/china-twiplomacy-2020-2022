@@ -39,19 +39,14 @@ def get_labels(G, type_str, type_lst, n_labels):
     '''
     # sort list and take top 
     focus_handles = [
-        #'XHNews', 
-        #'CGTNOfficial', 
-        #'ChinaDaily', 
-        #'globaltimesnews',  
-        #'SpokespersonCHN', 
-        #'MFA_China',
-        #'zlj517',
-        #'PDChina', 
-        #'AmbLiuXiaoMing', 
-        #'AmbCuiTianKai',
-        #'HuXijin_GT',
-        #'CNS51952',
-        #'ChnEmbassy_jp'
+        "zlj517", 
+        "MFA_China",
+        "SpokespersonCHN", 
+        "XHNews",
+        "Chinamission2un", 
+        "CGTNOfficial",
+        "ChinaDaily",
+        "AmbLiuXiaoMing" 
     ]
     
     lst_sorted = sorted(type_lst, reverse=True)
@@ -150,7 +145,7 @@ def extract_edgedict(dict_lst, var_lst, sort_var):
     return edge_dict_sorted 
 
 #### plot 1 ####
-def plot_network(df_threshold, G, nodelst, edgelst, color_dct, node_color, nodeedge_color, edge_color, labeldict, node_size_lst, edge_width_lst, node_divisor, edge_divisor, title, filename, outfolder, seed = 8, k = 2, nudge_triple = False): 
+def plot_network(G, nodelst, edgelst, color_dct, node_color, nodeedge_color, edge_color, labeldict, node_size_lst, edge_width_lst, node_divisor, edge_divisor, title, filename, outfolder, seed = 8, k = 2, nudge_triple = False): 
 
     '''
     G: <networkx.classes.digraph.DiGraph> the graph
@@ -162,10 +157,8 @@ def plot_network(df_threshold, G, nodelst, edgelst, color_dct, node_color, nodee
     filename: <str> filename 
     '''
 
-
-
     # setup 
-    fig, ax = plt.subplots(figsize=(2.5, 2.5), dpi=300, facecolor='w', edgecolor='k')
+    fig, ax = plt.subplots(figsize=(3, 3), dpi=300, facecolor='w', edgecolor='k')
     plt.axis("off")
 
     # position & manual tweaking
@@ -175,7 +168,7 @@ def plot_network(df_threshold, G, nodelst, edgelst, color_dct, node_color, nodee
 
     # set up 
     node_size = [x/node_divisor for x in node_size_lst]
-    edge_width =  [x/edge_divisor if x > df_threshold else 0 for x in edge_width_lst]
+    edge_width =  [x/edge_divisor for x in edge_width_lst]
 
     # draw it 
     nx.draw_networkx_nodes(G, pos, nodelist = nodelst, node_size=node_size, node_color=node_color, edgecolors = nodeedge_color, linewidths=0.3) #, node_size = node_size, node_color = node_color)
@@ -183,15 +176,21 @@ def plot_network(df_threshold, G, nodelst, edgelst, color_dct, node_color, nodee
 
     # labels 
     label_options = {"edgecolor": "none", "facecolor": "white", "alpha": 0}
-    nx.draw_networkx_labels(G,pos,labels=labeldict,font_size=3, bbox=label_options, font_weight = 'bold')
+    nx.draw_networkx_labels(
+        G,
+        pos,
+        labels=labeldict,
+        font_size=3, 
+        bbox=label_options, 
+        font_weight = 'bold')
 
     # formatting & save
     lines, labels = get_legend(node_size, color_dct)
-    fig.legend(lines, labels, loc = 'lower left', labelspacing = 1.2, fontsize = 6, frameon = False)
+    fig.legend(lines, labels, bbox_to_anchor=[0.53, 0.14], labelspacing = 1, columnspacing = 1, fontsize = 6, frameon = False, ncol=2, handletextpad=0.01)
     plt.tight_layout()
-    plt.savefig(f"{outfolder}/{filename}_seed{seed}_k{k}.png", bbox_inches='tight')
+    plt.savefig(f"{outfolder}/{filename}_seed{seed}_k{k}_test.png", bbox_inches='tight')
 
-def main(n_labels, infile, outfolder, df_threshold): 
+def main(n_labels, infile, outfolder): 
     print(infile)
     ''' 1. vars '''
     seed = 11
@@ -208,6 +207,7 @@ def main(n_labels, infile, outfolder, df_threshold):
     concat_sub = concat[(concat["category"] == "Media") | (concat['category'] == 'Diplomat')] # only cited by media or diplomat
     weighted_mention = concat_sub.groupby(['mentionee', 'mentioner', 'category', 'category_mentionee']).size().to_frame('weight').reset_index() # weighted
     
+    '''
     #### naive backboning after results ####
     weighted_copy = weighted_mention[weighted_mention["weight"] > df_threshold]
     def edgelist_to_authors(d, from_col, to_col):
@@ -219,6 +219,7 @@ def main(n_labels, infile, outfolder, df_threshold):
         return authorlst
     authorlst = edgelist_to_authors(weighted_copy, "mentionee", "mentioner")
     #### naive backboning after results ####    
+    '''
 
     G = nx.from_pandas_edgelist(weighted_mention,source='mentioner',target='mentionee', edge_attr='weight', create_using=nx.DiGraph()) # create network
 
@@ -295,7 +296,7 @@ def main(n_labels, infile, outfolder, df_threshold):
     dct_node = dict(G.nodes(data=True))
 
     ###### naive filtering after calculations #######
-    dct_node = {key: value for key, value in dct_node.items() if key in authorlst}
+    #dct_node = {key: value for key, value in dct_node.items() if key in authorlst}
 
     dct_mention = sort_dictionary(dct_node, 'mentions')
     #dct_unweighted = sort_dictionary(dct_node, 'unweighted_degree')
@@ -342,7 +343,7 @@ def main(n_labels, infile, outfolder, df_threshold):
     node_divisor = 20000*1
     edge_divisor = 100*edge_mult
     title = 'Diplomats and Media sub-network (nodesize: total number of mentions)'
-    filename = f'network_focus_mentions_{df_threshold}'
+    filename = f'network_focus_mentions'
     nudge_triple = [
         ('HuXijin_GT', -0.1, 0),
         ('AmbassadeChine', 0.1, 0.02),
@@ -355,7 +356,7 @@ def main(n_labels, infile, outfolder, df_threshold):
     ]
 
     plot_network(
-        df_threshold = df_threshold,
+        #df_threshold = df_threshold,
         G = G, 
         nodelst = nodelst_mentions,
         edgelst = edgelst,
@@ -380,10 +381,10 @@ def main(n_labels, infile, outfolder, df_threshold):
     node_divisor = 6*10
     edge_divisor = 100*edge_mult
     title = 'Diplomats and Media sub-network (nodesize: number of neighbors weighted)'
-    filename = f'network_focus_weighted_degree_{df_threshold}'
+    filename = f'network_focus_weighted_degree'
 
     plot_network(
-        df_threshold = df_threshold,
+        #df_threshold = df_threshold,
         G = G, 
         nodelst = nodelst_weighted,
         edgelst = edgelst,
@@ -408,10 +409,10 @@ def main(n_labels, infile, outfolder, df_threshold):
     node_divisor = 3*10
     edge_divisor = 100*edge_mult
     title = 'Diplomats and Media sub-network (nodesize: in-degree -- inwards)'
-    filename = f'network_focus_in_degree_{df_threshold}'
+    filename = f'network_focus_in_degree'
 
     plot_network(
-        df_threshold = df_threshold,
+        #df_threshold = df_threshold,
         G = G, 
         nodelst = nodelst_indegree,
         edgelst = edgelst,
@@ -436,10 +437,10 @@ def main(n_labels, infile, outfolder, df_threshold):
     node_divisor = 3*10
     edge_divisor = 100*edge_mult
     title = 'Diplomats and Media sub-network (nodesize: out-degree -- outwards)'
-    filename = f'network_focus_out_degree_{df_threshold}'
+    filename = f'network_focus_out_degree'
 
     plot_network(
-        df_threshold = df_threshold,
+        #df_threshold = df_threshold,
         G = G, 
         nodelst = nodelst_outdegree,
         edgelst = edgelst,
@@ -464,10 +465,10 @@ if __name__ == "__main__":
     ap.add_argument("-in", "--infile", required=True, help="path to csv")
     ap.add_argument("-out", "--outfolder", required=True, help="path to fig folder")
     ap.add_argument("-n", "--nlabels", required=False, type=int, default=20, help="how many labels on plots")
-    ap.add_argument('-th', '--threshold', required=False, type=int, default=False, help = "backboning threshold")
+    #ap.add_argument('-th', '--threshold', required=False, type=int, default=False, help = "backboning threshold")
     args = vars(ap.parse_args())
     main(
         n_labels = args["nlabels"], 
         infile = args["infile"], 
-        outfolder = args["outfolder"],
-        df_threshold = args['threshold'])
+        outfolder = args["outfolder"])
+        #df_threshold = args['threshold'])

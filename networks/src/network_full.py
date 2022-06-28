@@ -38,19 +38,14 @@ def get_labels(G, type_str, type_lst, n_labels):
     '''
     # sort list and take top 
     focus_handles = [
-        #'XHNews', 
-        #'CGTNOfficial', 
-        #'ChinaDaily', 
-        #'globaltimesnews',  
-        #'SpokespersonCHN', 
-        #'MFA_China',
-        #'zlj517',
-        #'PDChina', 
-        #'AmbLiuXiaoMing', 
-        #'AmbCuiTianKai',
-        #'HuXijin_GT',
-        #'CNS51952',
-        #'ChnEmbassy_jp'
+        "zlj517", 
+        "MFA_China",
+        "SpokespersonCHN", 
+        "XHNews",
+        "CGTNOfficial",
+        "ChinaDaily", 
+        "xuejianosaka",
+        "CGMeifangZhang" 
     ]
     
     lst_sorted = sorted(type_lst, reverse=True)
@@ -162,7 +157,7 @@ def plot_network(G, nodelst, edgelst, color_dct, node_color, nodeedge_color, edg
     '''
 
     # setup 
-    fig, ax = plt.subplots(figsize=(2.5, 2.5), dpi=300, facecolor='w', edgecolor='k')
+    fig, ax = plt.subplots(figsize=(3, 3), dpi=300, facecolor='w', edgecolor='k')
     plt.axis("off")
 
     # position & manual tweaking
@@ -170,14 +165,9 @@ def plot_network(G, nodelst, edgelst, color_dct, node_color, nodeedge_color, edg
     if nudge_triple: 
         pos = nudge_position(pos, nudge_triple)
 
-
-    ### new thing to clear it up ###
-    #cutoff = np.quantile(edge_width_lst, 0.95) # only 20% of edges shown
-
     # set up 
     node_size = [x/node_divisor for x in node_size_lst]
-    edge_width = [x/edge_divisor for x in edge_width_lst]
-    #edge_width =  [x/edge_divisor if x > cutoff else 0 for x in edge_width_lst]
+    edge_width =  [x/edge_divisor for x in edge_width_lst]
 
     # draw it 
     nx.draw_networkx_nodes(G, pos, nodelist = nodelst, node_size=node_size, node_color=node_color, edgecolors = nodeedge_color, linewidths=0.3) #, node_size = node_size, node_color = node_color)
@@ -185,11 +175,17 @@ def plot_network(G, nodelst, edgelst, color_dct, node_color, nodeedge_color, edg
 
     # labels 
     label_options = {"edgecolor": "none", "facecolor": "white", "alpha": 0}
-    nx.draw_networkx_labels(G,pos,labels=labeldict,font_size=3, bbox=label_options, font_weight = 'bold')
+    nx.draw_networkx_labels(
+        G,
+        pos,
+        labels=labeldict,
+        font_size=3, 
+        bbox=label_options, 
+        font_weight = 'bold')
 
     # formatting & save
     lines, labels = get_legend(node_size, color_dct)
-    fig.legend(lines, labels, loc = 'lower left', labelspacing = 1.2, fontsize = 6, frameon = False)
+    fig.legend(lines, labels, bbox_to_anchor=[0.53, 0.14], labelspacing = 1, columnspacing = 1, fontsize = 6, frameon = False, ncol=2, handletextpad=0.01)
     plt.tight_layout()
     plt.savefig(f"{outfolder}/{filename}_seed{seed}_k{k}.png", bbox_inches='tight')
 
