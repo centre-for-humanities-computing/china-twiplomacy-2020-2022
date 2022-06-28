@@ -3,7 +3,6 @@ main document for plot (updated 2022-02-01 VMP).
 '''
 
 # imports 
-import backboning
 import pandas as pd 
 import numpy as np
 import networkx as nx 
@@ -186,9 +185,9 @@ def plot_network(G, nodelst, edgelst, color_dct, node_color, nodeedge_color, edg
 
     # formatting & save
     lines, labels = get_legend(node_size, color_dct)
-    fig.legend(lines, labels, bbox_to_anchor=[0.53, 0.14], labelspacing = 1, columnspacing = 1, fontsize = 6, frameon = False, ncol=2, handletextpad=0.01)
+    fig.legend(lines, labels, bbox_to_anchor=[0.45, 0.12], labelspacing = 1, columnspacing = 1, fontsize = 6, frameon = False, ncol=2, handletextpad=0.01)
     plt.tight_layout()
-    plt.savefig(f"{outfolder}/{filename}_seed{seed}_k{k}_test.png", bbox_inches='tight')
+    plt.savefig(f"{outfolder}/{filename}_seed{seed}_k{k}.png", bbox_inches='tight')
 
 def main(n_labels, infile, outfolder): 
     print(infile)
