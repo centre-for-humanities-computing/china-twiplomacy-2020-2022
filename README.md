@@ -74,7 +74,7 @@ open [here](https://htmlpreview.github.io/?https://github.com/centre-for-humanit
 #### Figure 8: Topic model (diplomats) - late period
 open [here](https://htmlpreview.github.io/?https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/topic-model/plots/topic_model_diplomat_latedates.html)
 
-## Network Analysis (NB: needs modification)
+## Network Analysis
 Network analysis performed using the networkx package in python (https://networkx.org/) and the network visualizations are generated from the file ```network_main.py``` (see usage below). 
 Nodes in the networks are Twitter handles, and edges (connections) are weighted by the number of mentions between the Twitter handles that are displayed. 
 The network visualizations only plot Twitter handles that are either flagged as (i) Chinese diplomats or (ii) Chinese media outlets. 
@@ -110,18 +110,18 @@ This bash script calls the ```concat_files.py``` file which concatenates a direc
 4. Run python file 
 
 ```
-subsets.py 
+python subsets.py 
 ```
 
-This subsets the data into three periods: 
-(1) early period: 01.11.19-28.02.21 
-(2) late period: 01.03.21-30.04.22 
-(3) full period: 01.11.19-30.04.22 
+This subsets the data into three periods: </br>
+(1) early period: 01.11.19-28.02.21 </br>
+(2) late period: 01.03.21-30.04.22 </br>
+(3) full period: 01.11.19-30.04.22 </br> 
 
 5. Run python file
 
 ```
-data_cleaning.py 
+python data_cleaning.py 
 ```
 
 This fixes data issues and inconsistencies. 
@@ -135,15 +135,15 @@ bash network_full.sh
 ```
 
 in the scripts above set: <br/>
-NET=true <br/>
-SUM=true <br/>
+```NET=true``` <br/>
+```SUM=true``` <br/>
 
 This runs the main analysis (network plots and summary statistics). 
 
 7. Run python file
 
 ```
-influencers.py
+python influencers.py
 ```
 
 This generates plot and overview over the mentions from influencers to handles belonging to Chinese diplomats and media outlets. 
