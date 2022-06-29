@@ -99,21 +99,54 @@ source cnenv/bin/activate
 cd networks/src
 ```
 
-3. Run bash script
+3. Run bash script 
 
 ```
-bash main.sh
+bash preprocessing.sh 
 ```
 
-in ```main.sh``` set: <br/>
-PRE=true <br/>
+This bash script calls the ```concat_files.py``` file which concatenates a directory of .csv files to one .csv file. 
+
+4. Run python file 
+
+```
+subsets.py 
+```
+
+This subsets the data into three periods: 
+(1) early period: 01.11.19-28.02.21 
+(2) late period: 01.03.21-30.04.22 
+(3) full period: 01.11.19-30.04.22 
+
+5. Run python file
+
+```
+data_cleaning.py 
+```
+
+This fixes data issues and inconsistencies. 
+
+6. Run bash script
+
+```
+bash network_early.sh
+bash network_late.sh
+bash network_full.sh
+```
+
+in the scripts above set: <br/>
 NET=true <br/>
 SUM=true <br/>
 
-This ensures that the bash script calls (runs) 
-1. preprocessing (```concat_files.py```)
-2. network visualizations (```network_main.py```) 
-3. summary data analysis (```summary_stats_focus.py```)
+This runs the main analysis (network plots and summary statistics). 
+
+7. Run python file
+
+```
+influencers.py
+```
+
+This generates plot and overview over the mentions from influencers to handles belonging to Chinese diplomats and media outlets. 
 
 ## Bot Detection
 We train a logistic classifier on the cresci-2017 (Cresci et al., 2017) data set (available: https://botometer.osome.iu.edu/bot-repository/datasets.html) to classify Twitter handles as genuine or spam/bot/fake. We use the widely used fofo metric (e.g. Yang et al., 2013; Tavazoee et al., 2020) which is (following/followers) of an account. We use (following+1/followers+1) to avoid division with zero, and when an account appears more than once in a data set we use only the last appearance (i.e. the number of following and followers for the handle at that time). The intuition behind the metric is that bot-accounts tend to follow many other accounts (following) but they tend to have few followers. This means that they will generally have a high fofo-ratio (i.e. high following, low followers). Using the trained model, we estimate the fraction of genuine accounts vs. spam/bot/fake accounts in our own data set, as well as in a baseline data set consisting of vaccine-related tweets from 2020-2021 (https://www.kaggle.com/datasets/gpreda/all-covid19-vaccines-tweets). We estimate 27.22% of the accounts in the baseline (vaccine) data set to be non-genuine accounts and 44.84% of accounts in our data set of Chinese state media and diplomats to be non-genuine accounts. There is considerable uncertainty around this estimate since (1) our data set might differ in other respects than the amount of bot-activity from the baseline data set and (2) while the fofo-metric is widely used (Yang et al., 2013) it is not universally found to be accurate in detecting bots. 

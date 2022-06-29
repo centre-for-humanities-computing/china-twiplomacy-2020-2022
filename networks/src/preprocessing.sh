@@ -15,6 +15,3 @@ then
 		-f False \
 		-or False 
 fi
-
-### some processing in between here: 
-## (1) subsets.py and sanity_checks.py

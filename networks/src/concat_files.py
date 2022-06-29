@@ -37,17 +37,7 @@ def main(inpath, outpath, outname, filter_dates = "False", only_retweets = "Fals
     print(f"filter dates: {filter_dates}")
     print("--- starting: processing ---")
     onlyfiles = [f for f in listdir(inpath) if isfile(join(inpath, f))]
-    
-    # testing something
-    '''
-    for file in onlyfiles: 
-        try: 
-            d = pd.read_csv(f"{inpath}{file}")
-            print(f"file succes: {file}")
-        except UnicodeDecodeError: 
-            print(f"file fail: {file}")
-    '''
-    
+
     # basic cleaning
     df_list = [pd.read_csv(f"{inpath}{onlyfile}") for onlyfile in onlyfiles] # , engine='python', encoding = 'utf-8', error_bad_lines=False
     df_gathered = pd.concat(df_list)
