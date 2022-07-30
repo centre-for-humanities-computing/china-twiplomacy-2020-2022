@@ -700,22 +700,22 @@ Influencers identified by ASPI: https://www.aspi.org.au/report/borrowing-mouths-
 #### Figure 5c: Mentioners in network (out-degree) - late period
 ![alt text](https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/networks/fig/network_late/network_focus_out_degree_seed11_k1.8.png)
 
-#### Figure 9: Topic model (diplomats) - full period
+#### Figure 6: Topic model (diplomats) - full period
 open [here](https://htmlpreview.github.io/?https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/topic-model/plots/topic_model_diplomat_alldates.html)
 
-#### Figure 10: Topic model (diplomats) - early period
+#### Figure 7: Topic model (diplomats) - early period
 open [here](https://htmlpreview.github.io/?https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/topic-model/plots/topic_model_diplomat_earlydates.html)
 
-#### Figure 11: Topic model (diplomats) - late period
+#### Figure 8: Topic model (diplomats) - late period
 open [here](https://htmlpreview.github.io/?https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/topic-model/plots/topic_model_diplomat_latedates.html)
 
-#### Figure 12: Topic model (media) - full period
+#### Figure 9: Topic model (media) - full period
 open [here](https://htmlpreview.github.io/?https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/topic-model/plots/topic_model_media_alldates.html)
 
-#### Figure 13: Topic model (media) - early period
+#### Figure 10: Topic model (media) - early period
 open [here](https://htmlpreview.github.io/?https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/topic-model/plots/topic_model_media_earlydates.html)
 
-#### Figure 14: Topic model (media) - late period
+#### Figure 11: Topic model (media) - late period
 open [here](https://htmlpreview.github.io/?https://github.com/centre-for-humanities-computing/china-twiplomacy-2020-2022/blob/main/topic-model/plots/topic_model_media_latedates.html)
 
 
