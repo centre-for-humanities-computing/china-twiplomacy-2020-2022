@@ -2,7 +2,7 @@
 
 ### Tables
 #### Table 1a: Dataset (total period)
-| Data collection                                                            |                            |
+| **Data collection**                                                            |                            |
 | -------------------------------------------------------------------------- | -------------------------- |
 | Date range                                                                 | Nov 1, 2019 - Apr 30, 2022 |
 | Days collected                                                             | 912                        |
@@ -11,7 +11,7 @@
 | Diplomacy                                                                  | 65                         |
 | Media                                                                      | 13                         |
 |                                                                            |                            |
-| Datasets                                                                   | Number of cases            |
+| **Datasets**                                                                   | Number of cases            |
 | 1\. Total original tweets and retweets collected (network analysis)        | 714.568                    |
 | 1a. Diplomacy original tweets                                              | 101.602                    |
 | 1b. Diplomacy retweets                                                     | 80.162                     |
@@ -305,6 +305,7 @@ Metadata retrieved on 08.06.22
 | @shen\_shiwei                  | SHEN Shiwei, CGTN News Producer                             | 80188     | 7088       | 4922                      | 4554                       | 377                          | 357                 | 9740                        | 398                  | 5299                   | 11200                      | 2012.05      |
 | @XHNews                        | Xinhua News                                                 | 12277458  | 74         | 40125                     | 39945                      | 29                           | 29                  | 21800                       | 10                   | 40154                  | 202300                     | 2012.02      |
 | @XinWen\_Ch                    | Voice of China                                              | 4140      | 1146       | 3304                      | 140                        | 316                          | 26                  | 208                         | 79                   | 3620                   | 3765                       | 2019.12      |
+
 Metadata retrieved on 08.06.22
 
 
@@ -324,6 +325,7 @@ Metadata retrieved on 08.06.22
 | @shen\_shiwei                  | SHEN Shiwei, CGTN News Producer                             | 80188     | 7088       | 5052                      | 4732                       | 286                          | 276                 | 5552                        | 346                  | 5338                   | 11200                      | 2012.05      |
 | @XHNews                        | Xinhua News                                                 | 12277458  | 74         | 35027                     | 34880                      | 8                            | 8                   | 21235                       | 3                    | 35035                  | 202300                     | 2012.02      |
 | @XinWen\_Ch                    | Voice of China                                              | 4140      | 1146       | 16                        | 1                          | 0                            | 0                   | 0                           | 0                    | 16                     | 3765                       | 2019.12      |
+
 Metadata retrieved on 08.06.22
 
 #### Table 4a: Popular hashtags in original tweets and retweets from all diplomats (01.11.19-30.04.22)
